@@ -19,39 +19,24 @@ public class SearchLabApplication {
         FindFile ff = new FindFile()
                 .recursive(true)
                 .includeDirs(true)
-                .searchPath("/some/path");
+                .searchPath("E:\\wanghao\\search-lab\\res\\不动产登记相关法律法规");
 
         ff.forEach(file -> {
             // process file
+            System.out.println(file.getAbsolutePath());
         });
 
-        FileWriter writer = new FileWriter("test.properties");
+        FileWriter writer = new FileWriter("E:\\wanghao\\search-lab\\res\\test.properties");
         writer.write("test");
 
         //默认UTF-8编码，可以在构造中传入第二个参数做为编码
-        FileReader fileReader = new FileReader("test.properties");
+        FileReader fileReader = new FileReader("E:\\wanghao\\search-lab\\res\\test.properties");
         String result = fileReader.readString();
 
-        System.out.println(FileUtil.file("test.properties").getAbsolutePath());
+        System.out.println(FileUtil.file("E:\\wanghao\\search-lab\\res\\test.properties").getAbsolutePath());
 
         System.out.println(result);
 
-        /** 读取pdf */
-        //创建PdfDocument实例
-        File file = new File("test.pdf");
-
-        //加载PDF文件
-        PDDocument doc= PDDocument.load(file);
-
-        StringBuilder sb= new StringBuilder();
-
-        PDFTextStripper pdfStripper = new PDFTextStripper();
-
-        String text = pdfStripper.getText(doc);
-        doc.close();
-        System.out.println(text);
-
-        /** 读取word */
         SpringApplication.run(SearchLabApplication.class, args);
     }
 
