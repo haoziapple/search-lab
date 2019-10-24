@@ -67,7 +67,7 @@ public class SolrController {
                 UpdateResponse response = solrClient.add(CORE, document);
                 log.info("add doc response: " + response.jsonStr());
                 response = solrClient.commit(CORE);
-                log.info("commit doc response: " + response.toString());
+                log.info("commit doc response: " + response.jsonStr());
             } catch (Exception e) {
                 e.printStackTrace();
             }

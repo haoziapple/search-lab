@@ -29,4 +29,30 @@ public class DocInfo implements Serializable {
     private String filePath;
     @Field("fileText_txt_cn")
     private String fileText;
+    /**
+     * 也可以使用post-tool上传pdf、word文档，但是不知道如何进行全文搜索(TODO)
+     * 官方文档：http://lucene.apache.org/solr/guide/8_1/post-tool.html
+     */
+
+
+    /**
+     * 使用solr自带中文分词，
+     * 1. managed-schema添加：
+     * <dynamicField name="*_txt_cn" type="text_cn" indexed="true" stored="true"/>
+     *
+     * <fieldType name="text_cn" class="solr.TextField" positionIncrementGap="100">
+     *     <analyzer>
+     *       <tokenizer class="org.apache.lucene.analysis.cn.smart.HMMChineseTokenizerFactory"/>
+     *       <filter class="solr.CJKWidthFilterFactory"/>
+     *       <filter class="solr.StopFilterFactory" words="org/apache/lucene/analysis/cn/smart/stopwords.txt"/>
+     *       <filter class="solr.PorterStemFilterFactory"/>
+     *       <filter class="solr.LowerCaseFilterFactory"/>
+     *     </analyzer>
+     *   </fieldType>
+     *
+     *   2. solrconfig.xml
+     *   <lib dir="${solr.install.dir:../../../..}/contrib/analysis-extras/lucene-libs" regex="lucene-analyzers-smartcn-\d.*\.jar" />
+     *
+     *   3. 官方文档：http://lucene.apache.org/solr/guide/8_1/language-analysis.html
+     */
 }

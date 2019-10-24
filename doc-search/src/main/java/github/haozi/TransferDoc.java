@@ -1,5 +1,6 @@
 package github.haozi;
 
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileWriter;
 import jodd.io.findfile.FindFile;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,24 @@ public class TransferDoc {
     public TransferDoc(String rawDocPath) {
         this.rawDocPath = rawDocPath;
     }
+
+    public void clearTxtDoc() {
+        // 使用jodd的FindFile遍历文件
+        FindFile ff = new FindFile()
+                .recursive(true)
+                .includeDirs(true)
+                .searchPath(rawDocPath);
+        ff.forEach(file -> {
+            if (file.isDirectory()) {
+                return;
+            }
+            if(file.getName().endsWith(".txt")) {
+                boolean deleted = FileUtil.del(file);
+                log.info("delete " + (deleted ? "success: " : "fail: ") + file.getAbsolutePath());
+            }
+        });
+    }
+
 
     public List<DocInfo> tansfer() {
         List<DocInfo> result = new ArrayList<>();
@@ -122,7 +141,8 @@ public class TransferDoc {
     public static void main(String[] args) {
         TransferDoc transferDoc = new TransferDoc("E:\\wanghao\\search-lab\\res\\不动产登记相关法律法规");
 
-        List<DocInfo> docInfos = transferDoc.tansfer();
-        transferDoc.writeToTxt(docInfos);
+//        List<DocInfo> docInfos = transferDoc.tansfer();
+//        transferDoc.writeToTxt(docInfos);
+        transferDoc.clearTxtDoc();
     }
 }
